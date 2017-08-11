@@ -1,4 +1,4 @@
-const {send, json} = require('micro')
+const {send} = require('micro')
 const {createConnection} = require('mysql')
 const cfg = require('./config.json')
 const microCors = require('micro-cors')
