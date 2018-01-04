@@ -24,7 +24,8 @@ const main = async (request, response) => {
   if (request.url.startsWith('/current/')) {
     current(response)
     return
-  } else if (request.url.indexOf('/?timestamp=') !== -1) {
+  }
+  if (request.url.indexOf('/?timestamp=') !== -1) {
     const timestamp = decodeURI(request.url.split('/?timestamp=')[1])
     byTimestamp(timestamp, response)
     return
@@ -47,8 +48,10 @@ const current = (response) => {
 
 const byTimestamp = (timestamp, response) => {
   if (typeof timestamp !== 'undefined' && !isNaN(Date.parse(timestamp))) {
-    const query = 'SELECT created_at, current_status, message, comment' +
-      ' FROM status WHERE created_at >= ? ORDER BY created_at DESC'
+    const query = 'SELECT created_at, current_status, message, comment ' +
+      'FROM status ' +
+      'WHERE created_at >= ? ' +
+      'ORDER BY created_at DESC'
     connection.query(query, [timestamp], (err, res) => {
       if (err) {
         console.log(err)
